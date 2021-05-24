@@ -1,39 +1,54 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const TableRow = ({ data, destroyTask, updateTask }) => {
+const TableRow = ({ data, handlePinned, handleClicked }) => {
   return (
-    <tbody className="bg-white divide-y divide-gray-200">
+    <tbody className="bg-white divide-y divide-gray-200 rounded-b">
       {data.map(rowData => (
-        <tr key={rowData.title}>
+        <tr key={rowData.id}>
           <td
-            className="px-6 py-4 text-sm font-medium
-            leading-5 text-bb-gray whitespace-no-wrap"
+            className="px-6 py-4 text-2xl font-medium text-center
+            leading-5 text-bb-gray whitespace-no-wrap bg-gray-100"
           >
-            {rowData.title}
+            <i
+              className={`ri-pushpin-2-fill align-middle cursor-pointer
+              hover:text-purple-500 ${
+        rowData.is_pinned ? "text-purple-700" : "text-gray-500"
+        } `}
+              onClick={() => handlePinned(rowData.id)}
+            ></i>
           </td>
           <td
-            className="px-6 py-4 text-sm font-medium
-            leading-5 text-bb-gray whitespace-no-wrap"
-          >
-            {rowData.user_id}
-          </td>
-          <td
-            className="px-6 py-4 text-sm font-medium
-            leading-5 text-right cursor-pointer"
+            className="px-6 py-4 text-md break-all 
+            leading-5 text-bb-gray max-w-xs"
           >
             <a
-              className="text-bb-purple text-opacity-50
-              hover:text-opacity-100"
+              href={rowData.original_url}
+              target="_blank"
+              className="hover:underline cursor-pointer"
+              rel="noreferrer"
             >
-              Edit
+              {rowData.original_url}
             </a>
           </td>
           <td
-            className="px-6 py-4 text-sm font-medium
-            leading-5 text-right cursor-pointer"
+            className="px-6 py-4 text-md break-all
+            leading-5 text-bb-gray max-w-xs"
           >
-            <a className=" hover:text-bb-red">Delete</a>
+            <a
+              onClick={() => handleClicked(rowData.slug)}
+              target="_blank"
+              className="hover:underline cursor-pointer"
+              rel="noreferrer"
+            >
+              {rowData.shortened_url}
+            </a>
+          </td>
+          <td
+            className="px-6 py-4 text-md font-medium text-center
+            leading-5 text-bb-gray whitespace-no-wrap bg-gray-100"
+          >
+            {rowData.clicked}
           </td>
         </tr>
       ))}
