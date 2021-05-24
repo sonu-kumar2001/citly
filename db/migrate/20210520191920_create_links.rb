@@ -6,6 +6,7 @@ class CreateLinks < ActiveRecord::Migration[6.0]
       t.string :slug, null: false
       t.boolean :is_pinned, :default => false
       t.integer :clicked, :default => 0
+      t.timestamps
     end
   end
 end

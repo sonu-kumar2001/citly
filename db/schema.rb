@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 2021_05_20_191920) do
     t.string "slug", null: false
     t.boolean "is_pinned", default: false
     t.integer "clicked", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["original_url"], name: "index_links_on_original_url", unique: true
     t.index ["shortened_url"], name: "index_links_on_shortened_url", unique: true
   end
