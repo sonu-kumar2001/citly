@@ -19,6 +19,19 @@ const Dashboard = ({ history }) => {
       setLinks(response.data.links);
       setLoading(false);
     } catch (error) {
+      setLoading(false);
+      logger.error(error);
+    }
+  };
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    try {
+      await linksApi.create({ link: { original_url: link } });
+      setLink("");
+      fetchLinks();
+      setLoading(false);
+    } catch (error) {
       logger.error(error);
       setLoading(false);
     }
@@ -39,17 +52,6 @@ const Dashboard = ({ history }) => {
       fetchLinks();
     }, 1000);
     window.open(visit, "_blank");
-  };
-
-  const handleSubmit = async () => {
-    try {
-      setLoading(true);
-      await linksApi.create({ link: { original_url: link } });
-      setLink("");
-      fetchLinks();
-    } catch (error) {
-      logger.error(error);
-    }
   };
 
   useEffect(() => {
