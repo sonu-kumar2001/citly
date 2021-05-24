@@ -16,7 +16,7 @@ const Dashboard = ({ history }) => {
   const fetchLinks = async () => {
     try {
       const response = await linksApi.list();
-      setLinks(response.data.tasks);
+      setLinks(response.data.links);
       setLoading(false);
     } catch (error) {
       logger.error(error);
@@ -24,28 +24,24 @@ const Dashboard = ({ history }) => {
     }
   };
 
-  const handlePinned = async (slug, is_pinned) => {
+  const handlePinned = async slug => {
     try {
       setLoading(true);
       await linksApi.update(slug);
-      Toastr.success(`Link ${is_pinned ? "unpinned from" : "pinned to"} top!`);
       fetchLinks();
     } catch (error) {
       logger.error(error);
     }
   };
 
-  const handleClicked = async slug => {
-    try {
-      const response = await linksApi.show(slug);
-      window.open(response.data.link.original_url);
+  const handleClicked = visit => {
+    setTimeout(() => {
       fetchLinks();
-    } catch (error) {
-      logger.error(error);
-    }
+    }, 1000);
+    window.open(visit, "_blank");
   };
 
-  const createLink = async () => {
+  const handleSubmit = async () => {
     try {
       setLoading(true);
       await linksApi.create({ link: { original_url: link } });
@@ -75,7 +71,7 @@ const Dashboard = ({ history }) => {
           link={link}
           loading={loading}
           setLink={setLink}
-          createLink={createLink}
+          handleSubmit={handleSubmit}
         />
         <ListLinks
           data={links}
@@ -88,7 +84,15 @@ const Dashboard = ({ history }) => {
 
   return (
     <Container>
-      <h1 className="text-xl leading-5 text-center">You have no links 😔</h1>
+      <CreateLink
+        link={link}
+        loading={loading}
+        setLink={setLink}
+        handleSubmit={handleSubmit}
+      />
+      <h1 className="text-xl leading-5 text-center mt-5">
+        You have no links 😔
+      </h1>
     </Container>
   );
 };

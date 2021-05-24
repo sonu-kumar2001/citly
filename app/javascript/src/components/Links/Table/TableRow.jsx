@@ -15,7 +15,7 @@ const TableRow = ({ data, handlePinned, handleClicked }) => {
               hover:text-purple-500 ${
         rowData.is_pinned ? "text-purple-700" : "text-gray-500"
         } `}
-              onClick={() => handlePinned(rowData.id)}
+              onClick={() => handlePinned(rowData.slug)}
             ></i>
           </td>
           <td
@@ -36,7 +36,7 @@ const TableRow = ({ data, handlePinned, handleClicked }) => {
             leading-5 text-bb-gray max-w-xs"
           >
             <a
-              onClick={() => handleClicked(rowData.slug)}
+              onClick={() => handleClicked(rowData.shortened_url)}
               target="_blank"
               className="hover:underline cursor-pointer"
               rel="noreferrer"

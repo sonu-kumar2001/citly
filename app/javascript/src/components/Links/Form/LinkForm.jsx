@@ -5,7 +5,7 @@ import Button from "components/Button";
 
 const LinkForm = ({ link, setLink, loading, handleSubmit }) => {
   return (
-    <form className="flex w-4/5" onSubmit={handleSubmit}>
+    <form className="flex w-4/5 mx-auto" onSubmit={handleSubmit}>
       <div className="w-10/12">
         <Input
           placeholder="Enter a Url to shorten..."

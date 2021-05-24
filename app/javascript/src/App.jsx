@@ -4,10 +4,12 @@ import { initializeLogger } from "common/logger";
 import { logger } from "common/logger";
 import Dashboard from "components/Dashboard/index";
 import { ToastContainer } from "react-toastify";
+import { registerIntercepts } from "apis/axios";
 
 const App = () => {
   useEffect(() => {
     initializeLogger();
+    registerIntercepts();
     logger.info("Log from js-logger");
   }, []);
 

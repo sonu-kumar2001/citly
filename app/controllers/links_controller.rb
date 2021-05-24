@@ -1,5 +1,5 @@
 class LinksController < ApplicationController
-  before_action :generate_slug, :shortened_url, only: :create
+  before_action :generate_slug, :shortened_url, :validate_url, :check_uniqueness_of_link, only: :create
   before_action :load_link, only: [:show, :update]
   
   def index
@@ -50,5 +50,22 @@ class LinksController < ApplicationController
 
   def shortened_url
     @shortened_url = "#{request.base_url}/#{@slug}"
+  end
+
+  def validate_url
+    unless (link_params[:original_url] =~ /^(http|https)/)
+      render status: :unprocessable_entity, json: {
+        errors: t('link_format_error')
+      }
+    end
+  end
+
+  def check_uniqueness_of_link
+    link = Link.find_by(original_url: link_params[:original_url])
+    if link
+      render status: :unprocessable_entity, json: {
+        info: t('link_already_exist')
+      }
+    end
   end
 end
